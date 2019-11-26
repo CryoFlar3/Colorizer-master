@@ -45,7 +45,47 @@ public class MainActivity extends AppCompatActivity {
         menu.findItem(R.id.green).setChecked(green);
         menu.findItem(R.id.blue).setChecked(blue);
 
+        menu.setGroupVisible(R.id.colorGroup, color);
+
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.nextImage:
+                imageIndex++;
+                if (imageIndex >= imageResIds.length)
+                    imageIndex = 0;
+                loadImage();
+                break;
+            case R.id.color:
+                color = !color;
+                updateSaturation();
+                invalidateOptionsMenu();
+                break;
+            case  R.id.red:
+                red = !red;
+                updateColors();
+                item.setChecked(red);
+                break;
+            case  R.id.green:
+                green = !green;
+                updateColors();
+                item.setChecked(green);
+                break;
+            case  R.id.blue:
+                blue = !blue;
+                updateColors();
+                item.setChecked(blue);
+                break;
+            case R.id.reset:
+                imageView.clearColorFilter();
+                red = green = blue = color = true;
+                invalidateOptionsMenu();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void updateSaturation() {
